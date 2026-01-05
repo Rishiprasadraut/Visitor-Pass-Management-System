@@ -47,12 +47,3 @@ The app listens on `PORT` (default from `.env` or 3000).
 - `MONGO_URI` — MongoDB connection string
 - `JWT_SECRET` — Secret used to sign JWTs
 
-
-
-## 📄 License
-
-MIT
-
----
-
-If you want, I can commit and push this `README.md` for you, or also purge `.env` from history now.
