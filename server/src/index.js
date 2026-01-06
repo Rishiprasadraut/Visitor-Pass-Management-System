@@ -5,7 +5,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 const connectDB = require("./config/db")
 
 const authRoutes = require("./routes/auth/routes");
-
+const visitorRoutes = require("./routes/visitor/routes")
 const app = express()
 
 
@@ -19,8 +19,8 @@ app.use(express.json())
 
 
 
-
 app.use("/api/auth", authRoutes);
+app.use("/api/visitors", visitorRoutes)
 
 
 
