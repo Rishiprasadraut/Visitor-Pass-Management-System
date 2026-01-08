@@ -1,105 +1,244 @@
-# Visitor Pass Management System
+Perfect 👍
+Below is a **FINAL, GitHub-ready README** you can **directly copy-paste** into your repository.
+This is written exactly how **Indian startups / small MNC recruiters** expect.
 
-**Visitor Pass Management System** is a simple Express + MongoDB application for managing visitor passes, users, and authentication.
+---
 
-## 🔧 Features
+# 🚪 Visitor Pass Management System (MERN Backend)
 
-- User registration & login (JWT)
-- Role-based users (ADMIN, SECURITY, EMPLOYEE)
-- MongoDB (Mongoose) backend
+A **production-ready Visitor Pass Management System** built using **Node.js, Express, MongoDB**, following **real company backend architecture** with authentication, role-based access, audit logs, reports, and search.
 
-## ⚙️ Prerequisites
+This project simulates how **Indian SaaS / HRTech / ERP products** manage visitors securely.
 
-- Node.js (>=16)
-- MongoDB running locally or accessible via connection string
+---
 
-## 🚀 Quickstart
+## 🚀 Features
 
-1. Install dependencies:
+### 🔐 Authentication & Authorization
+
+* JWT-based authentication
+* Role-based access control (RBAC)
+* Roles supported:
+
+  * **ADMIN**
+  * **SECURITY**
+  * **EMPLOYEE**
+
+---
+
+### 👥 Visitor Management
+
+* Create visitor entry (EMPLOYEE / SECURITY)
+* Approve or reject visitors (ADMIN)
+* Check-in visitors (SECURITY)
+* Check-out visitors (SECURITY)
+* Full visitor lifecycle tracking
+
+---
+
+### 🕵️ Audit Logs (Enterprise Feature)
+
+* Logs every important action:
+
+  * Approval
+  * Rejection
+  * Check-in
+  * Check-out
+* Stores:
+
+  * Action performed
+  * Old status → New status
+  * User who performed the action
+  * Timestamp
+
+---
+
+### 📜 Visitor History
+
+* Complete status history per visitor
+* Tracks:
+
+  * Status changes
+  * Who changed it
+  * When it was changed
+
+---
+
+### 📊 Reports & Dashboard
+
+* Total visitors
+* Pending / Approved / Rejected
+* Checked-in / Checked-out
+* Today’s visitors count
+
+---
+
+### 🔍 Search & Pagination
+
+* Search visitors by:
+
+  * Name
+  * Phone
+  * Email
+  * Purpose
+* Filter by status
+* Pagination support (page & limit)
+
+---
+
+## 🛠 Tech Stack
+
+* **Backend:** Node.js, Express.js
+* **Database:** MongoDB (Mongoose)
+* **Authentication:** JWT
+* **Security:** Role-based middleware
+* **Tools:** Postman, Git, GitHub
+
+---
+
+## 📁 Project Structure
+
+```
+server/
+├── src/
+│   ├── config/
+│   │   └── db.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Visitor.js
+│   │   └── AuditLog.js
+│   ├── controllers/
+│   │   ├── auth/
+│   │   └── visitor/
+│   ├── routes/
+│   │   ├── auth/
+│   │   └── visitor/
+│   ├── middlewares/
+│   │   ├── auth/
+│   │   └── role/
+│   ├── utils/
+│   │   └── auditLogger.js
+│   └── index.js
+├── .env
+├── .env.example
+├── package.json
+└── README.md
+```
+
+---
+
+## ⚙️ Setup & Installation
+
+### 1️⃣ Clone the repository
 
 ```bash
-cd server
+git clone https://github.com/Rishiprasadraut/Visitor-Pass-Management-System.git
+cd Visitor-Pass-Management-System/server
+```
+
+### 2️⃣ Install dependencies
+
+```bash
 npm install
 ```
 
-2. Create a `.env` file from the example and set values:
+### 3️⃣ Configure environment variables
 
-```bash
-cp .env.example .env
-# Or create .env and add:
-# PORT=5000
-# MONGO_URI=mongodb://127.0.0.1:27017/visitor_pass_db
-# JWT_SECRET=your_jwt_secret_here
+Create `.env` file:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/visitor_pass_db
+JWT_SECRET=your_jwt_secret
 ```
 
-3. Run in development:
+> ⚠️ `.env` is ignored via `.gitignore`
+
+---
+
+### 4️⃣ Run the server
 
 ```bash
-cd server
 npm run dev
 ```
 
-The app listens on `PORT` (default from `.env` or 3000).
+Server will start on:
 
-## 🗄️ Environment Variables
-
-- `PORT` — Port for the server
-- `MONGO_URI` — MongoDB connection string
-- `JWT_SECRET` — Secret used to sign JWTs
-
-<<<<<<< HEAD
-=======
-> **Important:** Do NOT commit `.env` to git. This repository includes `server/.env.example` and `.gitignore` to prevent `.env` from being committed.
-
-## 🔒 Security & Secrets
-
-If a secret was committed by mistake:
-
-1. **Rotate** the compromised secrets immediately (JWT secret, DB passwords, API keys).
-2. Remove the file from the repository index (already done):
-
-```bash
-git rm --cached server/.env
-git commit -m "Remove server/.env"
-git push origin main
+```
+http://localhost:5000
 ```
 
+---
 
+## 🔐 Sample Users (for Testing)
 
+### ADMIN
+
+```json
 {
-  "name": "Rishiprasad Raut",
+  "name": "Admin User",
   "email": "admin@test.com",
   "password": "123456",
   "role": "ADMIN"
 }
+```
 
+### SECURITY
+
+```json
 {
   "name": "Security Guard",
   "email": "security@test.com",
   "password": "123456",
   "role": "SECURITY"
 }
+```
 
+### EMPLOYEE
+
+```json
 {
-  "name": "om",
-  "email": "om@12.com",
+  "name": "Employee User",
+  "email": "employee@test.com",
   "password": "123456",
   "role": "EMPLOYEE"
 }
+```
 
-Visitor Details
----DONE---
-{
-  "name": "Rahul Sharma",
-  "phone": "9876543210",
-  "email": "rahul@gmail.com",
-  "purpose": "Interview"
-}
+---
 
+## 🧪 Sample Visitor Data
+
+```json
 {
   "name": "Amit Kumar",
   "phone": "9123456789",
   "email": "amit.kumar@gmail.com",
   "purpose": "Technical Interview"
 }
->>>>>>> 574c9ac (Initial commit: Visitor Pass Management System backend)
+```
+
+---
+
+## 🔑 API Flow (Important)
+
+1. Login → Get JWT Token
+2. Create Visitor (EMPLOYEE / SECURITY)
+3. Approve / Reject (ADMIN)
+4. Check-in (SECURITY)
+5. Check-out (SECURITY)
+6. View History & Audit Logs
+
+---
+
+## 🎯 Learning Outcomes
+
+* Real-world backend architecture
+* JWT authentication & RBAC
+* Middleware-based security
+* Audit logging & history tracking
+* MongoDB schema design
+* Search, filter & pagination
+* Debugging production issues
+
+---

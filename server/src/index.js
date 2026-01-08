@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express')
 const cors = require('cors')
+const helmet = require("helmet");
 require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 const connectDB = require("./config/db")
 
@@ -13,9 +14,13 @@ const PORT = process.env.PORT || 3000;
 
 connectDB();
 
+app.use(require("./middlewares/errorHandler"));
 
 app.use(cors())
 app.use(express.json())
+
+app.use(helmet());
+
 
 
 

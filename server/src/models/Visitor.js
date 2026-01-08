@@ -1,4 +1,6 @@
-const { model, Schema } = require('mongoose');
+const mongoose = require('mongoose');
+const { model, Schema } = mongoose;
+
 
 const visitorSchema = new Schema({
     name: {
@@ -27,6 +29,22 @@ const visitorSchema = new Schema({
         enum: ["PENDING", "APPROVED", "REJECTED", "CHECKED_IN", "CHECKED_OUT"],
         default: "PENDING",
     },
+    history: [
+        {
+            status: {
+                type: String,
+                required: true
+            },
+            changedAt: {
+                type: Date,
+                default: Date.now
+            },
+            changedBy: {
+                type: Schema.Types.ObjectId,
+                ref: "User"
+            }
+        }
+    ]
 }, { timestamps: true }
 );
 
