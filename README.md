@@ -1,9 +1,3 @@
-Perfect 👍
-Below is a **FINAL, GitHub-ready README** you can **directly copy-paste** into your repository.
-This is written exactly how **Indian startups / small MNC recruiters** expect.
-
----
-
 # 🚪 Visitor Pass Management System (MERN Backend)
 
 A **production-ready Visitor Pass Management System** built using **Node.js, Express, MongoDB**, following **real company backend architecture** with authentication, role-based access, audit logs, reports, and search.
