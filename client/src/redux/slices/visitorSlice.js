@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getVisitor } from "../../api/visitorApi";
+import { getVisitors } from "../../api/visitorApi";
 
-export const fetchVisitors = createAsyncThunk(
-    "visitors/fetch",
-    async (__dirname, thunkAPI) => {
-        const res = await getVisitor();
-        return res.data.visitor;
+export const searchVisitors = createAsyncThunk(
+    "visitors/search",
+    async ({ search = "", status = "", page = 1, limit = 5 }) => {
+        const res = await getVisitors({ search, status, page, limit });
+        return res.data;
     }
 );
 
@@ -14,15 +14,23 @@ const visitorSlice = createSlice({
     initialState: {
         list: [],
         loading: false,
+        page: 1,
+        totalPages: 1,
+        total: 0,
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchVisitors.pending, (state) => {
-            state.loading = true;
-        }).addCase(fetchVisitors.fulfilled, (state, action) => {
-            state.loading = false;
-            state.list = action.payload;
-        });
-    }
-})
+        builder
+            .addCase(searchVisitors.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(searchVisitors.fulfilled, (state, action) => {
+                state.loading = false;
+                state.list = action.payload.visitors;
+                state.page = action.payload.page;
+                state.totalPages = action.payload.totalPages;
+                state.total = action.payload.total;
+            });
+    },
+});
 
 export default visitorSlice.reducer;

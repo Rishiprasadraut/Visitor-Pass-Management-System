@@ -23,9 +23,10 @@ const Navbar = () => {
           </NavLink>
         )}
 
-        <NavLink to="/visitors" className="hover:text-gray-300">
-          Visitors
-        </NavLink>
+        { (role === "ADMIN" || role === "SECURITY") && (
+          <NavLink to="/visitors" className="hover:text-gray-300">
+          Visitor Log
+        </NavLink>)}
 
         {role === "ADMIN" && (
           <NavLink to="/audit" className="hover:text-gray-300">
@@ -33,6 +34,12 @@ const Navbar = () => {
           </NavLink>
         )}
 
+         {role === ("EMPLOYEE", "SECURITY") && (
+          <NavLink to="/create-visitor" className="hover:text-gray-300">
+            create-visitor
+          </NavLink>
+        )}
+      
         <button
           onClick={handleLogout}
           className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
