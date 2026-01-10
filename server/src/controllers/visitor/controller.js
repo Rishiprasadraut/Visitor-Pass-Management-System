@@ -183,6 +183,9 @@ exports.checkOutVisitor = async (req, res) => {
 
 exports.dashboardStats = async (req, res) => {
     try {
+        
+        res.set("Cache-Control", "no-store");
+
         const total = await Visitor.countDocuments();
 
         const pending = await Visitor.countDocuments({ status: "PENDING" });
