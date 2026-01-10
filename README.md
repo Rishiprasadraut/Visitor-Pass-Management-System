@@ -1,8 +1,5 @@
 # 🚪 Visitor Pass Management System (MERN Backend)
 
-A **production-ready Visitor Pass Management System** built using **Node.js, Express, MongoDB**, following **real company backend architecture** with authentication, role-based access, audit logs, reports, and search.
-
-This project simulates how **Indian SaaS / HRTech / ERP products** manage visitors securely.
 
 ---
 
