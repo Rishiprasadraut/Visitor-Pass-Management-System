@@ -34,11 +34,27 @@ const Navbar = () => {
           </NavLink>
         )}
 
-         {role === ("EMPLOYEE", "SECURITY") && (
-          <NavLink to="/create-visitor" className="hover:text-gray-300">
-            create-visitor
+        {(role === "ADMIN" || role === "SECURITY") && (
+          <NavLink to="/reports" className="hover:text-gray-300">
+            Reports
           </NavLink>
         )}
+
+        {(role === "ADMIN" || role === "SECURITY") && (
+          <NavLink to="/visitor-history" className="hover:text-gray-300">
+            History
+          </NavLink>
+        )}
+
+         {(role === "EMPLOYEE" || role === "SECURITY") && (
+          <NavLink to="/create-visitor" className="hover:text-gray-300">
+            Create Visitor
+          </NavLink>
+        )}
+
+        <NavLink to="/profile" className="hover:text-gray-300">
+          Profile
+        </NavLink>
       
         <button
           onClick={handleLogout}

@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchVisitors } from "../redux/slices/visitorSlice";
 import { updateStatus, checkInVisitor, checkOutVisitor } from "../api/visitorApi";
+import { useNavigate } from "react-router-dom";
 
 const Visitors = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { list, loading, totalPages } = useSelector((state) => state.visitors);
   const { role } = useSelector((state) => state.auth);
 
@@ -96,6 +98,17 @@ const Visitors = () => {
                 </div>
 
                 <div className="flex gap-2 mt-4 sm:mt-0">
+                  {/* View History Button */}
+                  <button
+                    onClick={() => navigate(`/visitor-history?id=${v._id}`)}
+                    className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-sm font-semibold rounded-lg transition-colors"
+                    title="View History"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </button>
+
                   {v.status === "PENDING" && (
                     <>
                       <button onClick={() => handleAction(v._id, "APPROVED")} className="flex-1 sm:flex-none px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg transition-colors">

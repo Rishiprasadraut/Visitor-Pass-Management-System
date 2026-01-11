@@ -35,3 +35,17 @@ export const checkInVisitor = (id) => {
 export const checkOutVisitor = (id) => {
     return axiosInstance.patch(`/visitors/${id}/check-out`)
 }
+
+// Reports
+export const getReportByStatus = (status) => {
+    return axiosInstance.post("/visitors/reports/status", { status });
+}
+
+export const getReportByDate = (from, to) => {
+    return axiosInstance.post("/visitors/reports/date", { from, to });
+}
+
+// Visitor History
+export const getVisitorHistory = (id) => {
+    return axiosInstance.get(`/visitors/${id}/history`);
+}

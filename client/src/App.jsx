@@ -1,17 +1,22 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Visitors from "./pages/Visitors";
 import CreateVisitor from "./pages/CreateVisitor";
 import Dashboard from "./pages/Dashboard";
 import MainLayout from "./layouts/MainLayout";
 import AuditLogs from "./pages/AuditLogs";
+import Profile from "./pages/Profile";
+import Reports from "./pages/Reports";
+import VisitorHistory from "./pages/VisitorHistory";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         {/* Protected Layout */}
         <Route element={<MainLayout />}>
@@ -47,6 +52,33 @@ const App = () => {
             element={
               <ProtectedRoute roles={["ADMIN"]}>
                 <AuditLogs />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute roles={["ADMIN", "SECURITY", "EMPLOYEE"]}>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute roles={["ADMIN", "SECURITY"]}>
+                <Reports />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/visitor-history"
+            element={
+              <ProtectedRoute roles={["ADMIN", "SECURITY"]}>
+                <VisitorHistory />
               </ProtectedRoute>
             }
           />
