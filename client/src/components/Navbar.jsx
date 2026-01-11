@@ -23,10 +23,11 @@ const Navbar = () => {
           </NavLink>
         )}
 
-        { (role === "ADMIN" || role === "SECURITY") && (
+        {(role === "ADMIN" || role === "SECURITY") && (
           <NavLink to="/visitors" className="hover:text-gray-300">
-          Visitor Log
-        </NavLink>)}
+            Visitor Log
+          </NavLink>
+        )}
 
         {role === "ADMIN" && (
           <NavLink to="/audit" className="hover:text-gray-300">
@@ -46,7 +47,7 @@ const Navbar = () => {
           </NavLink>
         )}
 
-         {(role === "EMPLOYEE" || role === "SECURITY") && (
+        {(role === "EMPLOYEE" || role === "SECURITY") && (
           <NavLink to="/create-visitor" className="hover:text-gray-300">
             Create Visitor
           </NavLink>
@@ -55,7 +56,11 @@ const Navbar = () => {
         <NavLink to="/profile" className="hover:text-gray-300">
           Profile
         </NavLink>
-      
+        {role === "ADMIN" && (
+          <NavLink to="/register" className="hover:text-gray-300">
+            Register
+          </NavLink>
+        )}
         <button
           onClick={handleLogout}
           className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
