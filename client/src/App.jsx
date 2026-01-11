@@ -16,7 +16,14 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+         <Route
+            path="/register"
+            element={
+              <ProtectedRoute roles={["ADMIN"]}>
+                <Register />
+              </ProtectedRoute>
+            }
+          />
 
         {/* Protected Layout */}
         <Route element={<MainLayout />}>
