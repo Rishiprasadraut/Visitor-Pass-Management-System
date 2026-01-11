@@ -1,15 +1,14 @@
-# 🚪 Visitor Pass Management System (MERN Backend)
-
+# 🏢 Visitor Pass Management System (MERN)
 
 ---
 
-## 🚀 Features
+## 🚀 Live Features
 
 ### 🔐 Authentication & Authorization
 
-* JWT-based authentication
-* Role-based access control (RBAC)
-* Roles supported:
+* JWT based login
+* Role Based Access Control (RBAC)
+* Roles:
 
   * **ADMIN**
   * **SECURITY**
@@ -19,48 +18,25 @@
 
 ### 👥 Visitor Management
 
-* Create visitor entry (EMPLOYEE / SECURITY)
-* Approve or reject visitors (ADMIN)
-* Check-in visitors (SECURITY)
-* Check-out visitors (SECURITY)
-* Full visitor lifecycle tracking
+* Create visitor requests
+* Approve / Reject visitors
+* Check-In / Check-Out flow
+* Status tracking:
+
+  * `PENDING`
+  * `APPROVED`
+  * `REJECTED`
+  * `CHECKED_IN`
+  * `CHECKED_OUT`
 
 ---
 
-### 🕵️ Audit Logs (Enterprise Feature)
-
-* Logs every important action:
-
-  * Approval
-  * Rejection
-  * Check-in
-  * Check-out
-* Stores:
-
-  * Action performed
-  * Old status → New status
-  * User who performed the action
-  * Timestamp
-
----
-
-### 📜 Visitor History
-
-* Complete status history per visitor
-* Tracks:
-
-  * Status changes
-  * Who changed it
-  * When it was changed
-
----
-
-### 📊 Reports & Dashboard
+### 📊 Dashboard (Admin / Security)
 
 * Total visitors
-* Pending / Approved / Rejected
-* Checked-in / Checked-out
-* Today’s visitors count
+* Pending approvals
+* Checked-in visitors
+* Checked-out visitors
 
 ---
 
@@ -73,93 +49,171 @@
   * Email
   * Purpose
 * Filter by status
-* Pagination support (page & limit)
+* Pagination (page & limit support)
+
+---
+
+### 🕵️ Audit Logs (Admin)
+
+* Track critical actions:
+
+  * Approvals
+  * Check-ins
+  * Check-outs
+* Helps in security & compliance
+
+---
+
+## 🧑‍💼 Role Permissions
+
+| Role     | Permissions                               |
+| -------- | ----------------------------------------- |
+| ADMIN    | View dashboard, approve/reject, view logs |
+| SECURITY | Approve/reject, check-in, check-out       |
+| EMPLOYEE | Create visitor request                    |
 
 ---
 
 ## 🛠 Tech Stack
 
-* **Backend:** Node.js, Express.js
-* **Database:** MongoDB (Mongoose)
-* **Authentication:** JWT
-* **Security:** Role-based middleware
-* **Tools:** Postman, Git, GitHub
+### Frontend
+
+* React (Vite)
+* Redux Toolkit
+* React Router DOM
+* Axios
+* Tailwind CSS
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB + Mongoose
+* JWT Authentication
+* Role-based Middleware
 
 ---
 
 ## 📁 Project Structure
 
 ```
-server/
-├── src/
-│   ├── config/
-│   │   └── db.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Visitor.js
-│   │   └── AuditLog.js
-│   ├── controllers/
-│   │   ├── auth/
-│   │   └── visitor/
-│   ├── routes/
-│   │   ├── auth/
-│   │   └── visitor/
-│   ├── middlewares/
-│   │   ├── auth/
-│   │   └── role/
-│   ├── utils/
-│   │   └── auditLogger.js
-│   └── index.js
-├── .env
-├── .env.example
-├── package.json
+visitor-pass-management-system/
+│
+├── client/                # React Frontend
+│   ├── src/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── layoyts/
+│   │   ├── pages/
+│   │   ├── redux/
+│   │   └── utils/
+│
+├── server/                # Node Backend
+│   ├── src/
+│   │   └── config/
+│   │   ├── controllers/
+│   │   ├── middlewares/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   |── utils/  
+│   │   └── index.js 
+│
+│── .env 
 └── README.md
 ```
 
 ---
 
-## ⚙️ Setup & Installation
+## ⚙️ Environment Variables
 
-### 1️⃣ Clone the repository
-
-```bash
-git clone https://github.com/Rishiprasadraut/Visitor-Pass-Management-System.git
-cd Visitor-Pass-Management-System/server
-```
-
-### 2️⃣ Install dependencies
-
-```bash
-npm install
-```
-
-### 3️⃣ Configure environment variables
-
-Create `.env` file:
+### Backend `.env`
 
 ```env
 PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/visitor_pass_db
-JWT_SECRET=your_jwt_secret
+MONGO_URI=your_mongodb_url
+JWT_SECRET=your_secret_key
 ```
 
-> ⚠️ `.env` is ignored via `.gitignore`
+### Frontend `.env`
+
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+```
 
 ---
 
-### 4️⃣ Run the server
+## ▶️ Run Project Locally
+
+### 1️⃣ Clone Repository
 
 ```bash
+git clone https://github.com/your-username/visitor-pass-management-system.git
+cd visitor-pass-management-system
+```
+
+---
+
+### 2️⃣ Backend Setup
+
+```bash
+cd server
+npm install
 npm run dev
 ```
 
-Server will start on:
+---
 
-```
-http://localhost:5000
+### 3️⃣ Frontend Setup
+
+```bash
+cd client
+npm install
+npm run dev
 ```
 
 ---
+
+## 🔐 API Routes (Sample)
+
+```
+POST   /api/auth/login
+GET    /api/auth/profile
+
+POST   /api/visitors
+GET    /api/visitors
+PATCH  /api/visitors/:id/status
+PATCH  /api/visitors/:id/check-in
+PATCH  /api/visitors/:id/check-out
+
+POST   /api/visitors/search
+POST   /api/visitors/reports/status
+POST   /api/visitors/reports/date
+```
+
+---
+
+## 🧪 Testing
+
+* Tested via Postman
+* Protected routes verified with roles
+* Redux DevTools used for state validation
+
+
+## 👨‍💻 Author
+
+**Rishiprasad Raut**
+MERN Stack Developer
+📧 [](mailto:admin@test.com)
+
+---
+
+## ⭐ If you like this project
+
+Give it a ⭐ on GitHub — it helps a lot!
+
+---
+
+
 
 ## 🔐 Sample Users (for Testing)
 

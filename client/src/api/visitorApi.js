@@ -3,12 +3,12 @@ import axiosInstance from "../utils/axiosInstance";
 
 // GET visitors with search + filter + pagination
 export const getVisitors = ({ search, status, page, limit }) => {
-  return axiosInstance.post("/visitors/search", {
-    search,
-    status,
-    page,
-    limit,
-  });
+    return axiosInstance.post("/visitors/search", {
+        search,
+        status,
+        page,
+        limit,
+    });
 };
 
 
@@ -20,18 +20,18 @@ export const getVisitor = (params) => {
     return axiosInstance.get("/visitors", { params });
 }
 
-export const approveVisitor = (id, status) =>
-    axiosInstance.patch(`/visitors/${id}/status`, { status });
-
+export const approveVisitor = (id, status) => {
+    return axiosInstance.patch(`/visitors/${id}/status`, { status });
+}
 
 export const updateStatus = (id, status) => {
-    axiosInstance.patch(`/visitors/${id}/status`, { status })
+    return axiosInstance.patch(`/visitors/${id}/status`, { status:status })
 }
 
 export const checkInVisitor = (id) => {
-    axiosInstance.patch(`/visitors/${id}/check-in`);
+    return axiosInstance.patch(`/visitors/${id}/check-in`);
 }
 
 export const checkOutVisitor = (id) => {
-    axiosInstance.patch(`/visitors/${id}/check-out`)
+    return axiosInstance.patch(`/visitors/${id}/check-out`)
 }

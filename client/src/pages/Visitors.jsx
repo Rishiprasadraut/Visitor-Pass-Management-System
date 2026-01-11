@@ -34,7 +34,7 @@ const Visitors = () => {
     return styles[s] || "bg-gray-100 text-gray-700";
   };
 
-  if (loading) return <LoadingSkeleton />;
+  // if (loading) return <LoadingSkeleton />;
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8">
@@ -152,17 +152,17 @@ const Visitors = () => {
 };
 
 // Sub-component for a cleaner loading state
-const LoadingSkeleton = () => (
-  <div className="max-w-5xl mx-auto p-8 animate-pulse">
-    <div className="h-8 w-48 bg-slate-200 rounded mb-8"></div>
-    <div className="flex gap-4 mb-6">
-      <div className="h-10 flex-1 bg-slate-200 rounded-xl"></div>
-      <div className="h-10 w-32 bg-slate-200 rounded-xl"></div>
-    </div>
-    {[1, 2, 3].map((i) => (
-      <div key={i} className="h-24 bg-slate-200 rounded-2xl mb-4"></div>
-    ))}
-  </div>
-);
+// const LoadingSkeleton = () => (
+//   <div className="max-w-5xl mx-auto p-8 animate-pulse">
+//     <div className="h-8 w-48 bg-slate-200 rounded mb-8"></div>
+//     <div className="flex gap-4 mb-6">
+//       <div className="h-10 flex-1 bg-slate-200 rounded-xl"></div>
+//       <div className="h-10 w-32 bg-slate-200 rounded-xl"></div>
+//     </div>
+//     {[1, 2, 3].map((i) => (
+//       <div key={i} className="h-24 bg-slate-200 rounded-2xl mb-4"></div>
+//     ))}
+//   </div>
+// );
 
 export default Visitors;
