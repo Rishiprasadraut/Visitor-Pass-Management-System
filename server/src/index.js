@@ -21,6 +21,11 @@ app.use(express.json())
 
 app.use(helmet());
 
+app.use(cors({
+  origin: "https://visitor-pass-system.vercel.app",
+  credentials: true,
+}));
+
 
 
 
