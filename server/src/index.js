@@ -16,15 +16,17 @@ connectDB();
 
 app.use(require("./middlewares/errorHandler"));
 
-app.use(cors())
-app.use(express.json())
-
-app.use(helmet());
-
 app.use(cors({
-  origin: "https://visitor-pass-system.vercel.app",
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://visitor-pass-system.vercel.app"
+  ],
   credentials: true,
 }));
+
+app.use(express.json());
+app.use(helmet());
 
 
 
