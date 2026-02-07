@@ -1008,5 +1008,3 @@ If you found this project helpful, please give it a ⭐ on GitHub!
   <strong>Made with ❤️ using MERN Stack</strong><br>
   <sub>MongoDB • Express.js • React • Node.js</sub>
 </p>
-=======
->>>>>>> 2e121a6ee23ae1ca8c98dc2fe1838bde67fe3e81
