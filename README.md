@@ -975,6 +975,7 @@ VITE_API_BASE_URL=https://api.yourproduction.com/api
 - ✅ Production deployment strategies
 
 ---
+<<<<<<< HEAD
 
 ## 🤝 Contributing
 
@@ -1020,3 +1021,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   <strong>Made with ❤️ using MERN Stack</strong><br>
   <sub>MongoDB • Express.js • React • Node.js</sub>
 </p>
+=======
+>>>>>>> 2e121a6ee23ae1ca8c98dc2fe1838bde67fe3e81
