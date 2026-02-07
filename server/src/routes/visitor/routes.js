@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const controller = require("../../controllers/visitor/controller");
-const authMiddlware = require("../../middlewares/auth/middleware");
+const authMiddleware = require("../../middlewares/auth/middleware");
 const roleMiddleware = require("../../middlewares/auth/role");
 const { validateVisitor } = require("../../middlewares/validate");
 
@@ -10,39 +10,39 @@ const { validateVisitor } = require("../../middlewares/validate");
 // DASHBOARD
 router.get(
   "/dashboard",
-  authMiddlware,
-  roleMiddleware("ADMIN", "SECURITY"),
+  authMiddleware,
+  roleMiddleware(["ADMIN", "SECURITY"]),
   controller.dashboardStats
 );
 
 // AUDIT LOGS
 router.get(
   "/audit/logs",
-  authMiddlware,
-  roleMiddleware("ADMIN"),
+  authMiddleware,
+  roleMiddleware(["ADMIN"]),
   controller.getAuditLogs
 );
 
 // REPORTS
 router.post(
   "/reports/status",
-  authMiddlware,
-  roleMiddleware("ADMIN", "SECURITY"),
+  authMiddleware,
+  roleMiddleware(["ADMIN", "SECURITY"]),
   controller.visitorByStatus
 );
 
 router.post(
   "/reports/date",
-  authMiddlware,
-  roleMiddleware("ADMIN", "SECURITY"),
+  authMiddleware,
+  roleMiddleware(["ADMIN", "SECURITY"]),
   controller.visitorByDate
 );
 
 // SEARCH
 router.post(
   "/search",
-  authMiddlware,
-  roleMiddleware("ADMIN", "SECURITY"),
+  authMiddleware,
+  roleMiddleware(["ADMIN", "SECURITY"]),
   controller.searchVisitors
 );
 
@@ -51,8 +51,8 @@ router.post(
 // CREATE VISITOR
 router.post(
   "/",
-  authMiddlware,
-  roleMiddleware("EMPLOYEE", "SECURITY"),
+  authMiddleware,
+  roleMiddleware(["EMPLOYEE", "SECURITY"]),
   validateVisitor,
   controller.createVisitor
 );
@@ -60,40 +60,56 @@ router.post(
 // GET ALL VISITORS
 router.get(
   "/",
-  authMiddlware,
-  roleMiddleware("ADMIN", "SECURITY"),
+  authMiddleware,
+  roleMiddleware(["ADMIN", "SECURITY"]),
   controller.getVisitors
 );
 
 // APPROVE / REJECT
 router.patch(
   "/:id/status",
-  authMiddlware,
-  roleMiddleware("ADMIN", "SECURITY"),
+  authMiddleware,
+  roleMiddleware(["ADMIN", "SECURITY"]),
   controller.updateStatus
 );
 
 // CHECK-IN
 router.patch(
   "/:id/check-in",
-  authMiddlware,
-  roleMiddleware("SECURITY"),
+  authMiddleware,
+  roleMiddleware(["SECURITY"]),
   controller.checkInVisitor
 );
 
 // CHECK-OUT
 router.patch(
   "/:id/check-out",
-  authMiddlware,
-  roleMiddleware("SECURITY"),
+  authMiddleware,
+  roleMiddleware(["SECURITY"]),
   controller.checkOutVisitor
+);
+
+// UPDATE VISITOR DETAILS (ADMIN only)
+router.patch(
+  "/:id",
+  authMiddleware,
+  roleMiddleware(["ADMIN"]),
+  controller.updateVisitor
+);
+
+// DELETE VISITOR (ADMIN only)
+router.delete(
+  "/:id",
+  authMiddleware,
+  roleMiddleware(["ADMIN"]),
+  controller.deleteVisitor
 );
 
 // HISTORY (DYNAMIC — LAST)
 router.get(
   "/:id/history",
-  authMiddlware,
-  roleMiddleware("ADMIN", "SECURITY"),
+  authMiddleware,
+  roleMiddleware(["ADMIN", "SECURITY"]),
   controller.getVisitorHistory
 );
 

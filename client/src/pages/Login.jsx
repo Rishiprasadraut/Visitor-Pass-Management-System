@@ -32,7 +32,6 @@ const Login = () => {
       console.log("LOGIN RESPONSE:", res.data);
 
       const token = res.data.token;
-      localStorage.setItem("token", token);
 
       const profile = await axiosInstance.get("/auth/profile", {
         headers: {

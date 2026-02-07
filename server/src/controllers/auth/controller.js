@@ -11,6 +11,18 @@ exports.register = async (req, res) => {
         if (userExists)
             return res.status(400).json({ message: "User already Exists" })
 
+        // Password strength validation
+        if (password.length < 8) {
+            return res.status(400).json({ 
+                message: "Password must be at least 8 characters" 
+            });
+        }
+
+        if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+            return res.status(400).json({ 
+                message: "Password must contain uppercase, lowercase, and number" 
+            });
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -22,12 +34,13 @@ exports.register = async (req, res) => {
         })
 
         res.status(201).json({
-            message: " User registered successfully",
+            message: "User registered successfully",
             userId: user._id,
         })
 
     } catch (err) {
         console.error(err, "error in register")
+        res.status(500).json({ message: "Server error during registration" });
     }
 }
 
@@ -51,5 +64,6 @@ exports.login = async (req, res) => {
 
     } catch (err) {
         console.error(err, 'Error in login')
+        res.status(500).json({ message: "Server error during login" });
     }
 }

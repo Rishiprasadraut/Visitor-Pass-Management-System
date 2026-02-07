@@ -1,13 +1,18 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../utils/axiosInstance";
 import { loginSuccess, logout } from "../redux/slices/authSlice";
 
 const AuthLoader = ({ children }) => {
   const dispatch = useDispatch();
+  const { role } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    
+    // If already loaded from localStorage, skip API call
+    if (role) return;
+    
     if (!token) return;
 
     const loadProfile = async () => {
@@ -24,12 +29,13 @@ const AuthLoader = ({ children }) => {
           })
         );
       } catch (err) {
+        console.error("Auth validation failed:", err);
         dispatch(logout());
       }
     };
 
     loadProfile();
-  }, [dispatch]);
+  }, [dispatch, role]);
 
   return children;
 };

@@ -16,16 +16,16 @@ export const createVisitor = (data) => {
     return axiosInstance.post("/visitors", data);
 }
 
-export const getVisitor = (params) => {
-    return axiosInstance.get("/visitors", { params });
-}
-
-export const approveVisitor = (id, status) => {
-    return axiosInstance.patch(`/visitors/${id}/status`, { status });
-}
-
 export const updateStatus = (id, status) => {
-    return axiosInstance.patch(`/visitors/${id}/status`, { status:status })
+    return axiosInstance.patch(`/visitors/${id}/status`, { status })
+}
+
+export const updateVisitor = (id, data) => {
+    return axiosInstance.patch(`/visitors/${id}`, data);
+}
+
+export const deleteVisitor = (id) => {
+    return axiosInstance.delete(`/visitors/${id}`);
 }
 
 export const checkInVisitor = (id) => {

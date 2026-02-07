@@ -326,3 +326,60 @@ exports.getAuditLogs = async (req, res) => {
     }
 
 }
+
+exports.updateVisitor = async (req, res) => {
+    const { id } = req.params;
+    const { name, phone, email, purpose } = req.body;
+    
+    try {
+        const visitor = await Visitor.findById(id);
+        if (!visitor) {
+            return res.status(404).json({ message: "Visitor not found" });
+        }
+
+        // Update allowed fields
+        if (name) visitor.name = name;
+        if (phone) visitor.phone = phone;
+        if (email) visitor.email = email;
+        if (purpose) visitor.purpose = purpose;
+
+        await visitor.save();
+
+        await logAudit({
+            action: "UPDATE_VISITOR",
+            entity: "VISITOR",
+            entityId: visitor._id,
+            user: req.user
+        });
+
+        res.json({ message: "Visitor updated successfully", visitor });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error updating visitor" });
+    }
+};
+
+exports.deleteVisitor = async (req, res) => {
+    const { id } = req.params;
+    
+    try {
+        const visitor = await Visitor.findById(id);
+        if (!visitor) {
+            return res.status(404).json({ message: "Visitor not found" });
+        }
+
+        await logAudit({
+            action: "DELETE_VISITOR",
+            entity: "VISITOR",
+            entityId: visitor._id,
+            user: req.user
+        });
+
+        await Visitor.findByIdAndDelete(id);
+
+        res.json({ message: "Visitor deleted successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error deleting visitor" });
+    }
+};

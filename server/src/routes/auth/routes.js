@@ -9,8 +9,15 @@ const {
 
 //public
 
-router.post("/register", register);
 router.post("/login", login);
+
+//protected - ADMIN only (security fix: prevent unauthorized user registration)
+router.post(
+    "/register",
+    authMiddleware,
+    roleMiddleware(["ADMIN"]),
+    register
+);
 
 
 //profile router
@@ -20,23 +27,23 @@ router.get("/profile",authMiddleware,(req,res)=>{
 });
 
 
-// protected - ADMIN only
+// protected - ADMIN only (TEST ENDPOINT - for testing role-based access)
 
 router.get(
     "/admin",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware(["ADMIN"]),
     (req, res) => {
         res.json({ message: "Welcome Admin" })
     }
 );
 
-// protected - ADMIN & SECURITY
+// protected - ADMIN & SECURITY (TEST ENDPOINT - for testing multi-role access)
 
 router.get(
     "/admin-security",
     authMiddleware,
-    roleMiddleware(["admin", "security"]),
+    roleMiddleware(["ADMIN", "SECURITY"]),
     (req, res) => {
         res.json({ message: "Welcome Admin & Security" })
     }
