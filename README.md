@@ -1003,19 +1003,6 @@ If you found this project helpful, please give it a ⭐ on GitHub!
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 📞 Contact & Support
-
-- 📧 Email: your.email@example.com
-- 🐛 Issues: [GitHub Issues](https://github.com/your-username/visitor-pass-management-system/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/your-username/visitor-pass-management-system/discussions)
-
----
 
 <p align="center">
   <strong>Made with ❤️ using MERN Stack</strong><br>
