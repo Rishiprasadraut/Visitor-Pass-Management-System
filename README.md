@@ -1,4 +1,4 @@
-<img width="1920" height="1080" alt="Screenshot 2026-02-17 133743" src="https://github.com/user-attachments/assets/1cf80dd8-e4eb-47de-87d5-b18571a1b996" /># 🏢 Visitor Pass Management System
+# 🏢 Visitor Pass Management System
 
 A full-stack **MERN** application for managing visitor access in organizations. Features **QR code-based check-in/out**, **photo upload**, **PDF badge generation**, **email notifications**, role-based access control, real-time status tracking, audit logging, and comprehensive reporting.
 
