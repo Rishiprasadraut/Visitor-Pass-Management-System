@@ -1,6 +1,6 @@
 # 🏢 Visitor Pass Management System
 
-A full-stack **MERN** application for managing visitor access in organizations. Features role-based access control, real-time status tracking, audit logging, comprehensive reporting, and secure visitor workflow management.
+A full-stack **MERN** application for managing visitor access in organizations. Features **QR code-based check-in/out**, **photo upload**, **PDF badge generation**, **email notifications**, role-based access control, real-time status tracking, audit logging, and comprehensive reporting.
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
@@ -9,6 +9,20 @@ A full-stack **MERN** application for managing visitor access in organizations. 
 ![Redux](https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
+
+---
+
+## 🌟 Key Highlights
+
+- 📸 **Photo Upload** - Capture visitor photos with image preview (JPEG/PNG/GIF, 5MB max)
+- 🎫 **QR Code System** - Auto-generated QR codes on approval with camera-based scanning
+- 📄 **PDF Badges** - Professional downloadable visitor badges with embedded QR codes
+- ✉️ **Email Notifications** - Automated emails for approvals, rejections, and new requests
+- 📊 **CSV Export** - Export visitor data for reporting and analytics
+- 🔐 **4 User Roles** - ADMIN, SECURITY, EMPLOYEE, VISITOR with granular permissions
+- 🎨 **Modern UI** - Responsive sidebar for admins, clean navbar for visitors
+- 📱 **Digital Pass** - Visitors can view approved passes with QR codes on mobile
+- 🛡️ **Secure & Compliant** - Complete audit trails, file validation, and role-based access
 
 ---
 
@@ -36,21 +50,38 @@ A full-stack **MERN** application for managing visitor access in organizations. 
 
 ### 🔐 Authentication & Authorization
 - **JWT-based Authentication**: Secure token-based authentication
-- **Role-Based Access Control (RBAC)**: Three roles (ADMIN, SECURITY, EMPLOYEE)
+- **Role-Based Access Control (RBAC)**: Four roles (ADMIN, SECURITY, EMPLOYEE, VISITOR)
 - **Protected Routes**: Frontend and backend route protection
 - **Persistent Sessions**: Auto-login with localStorage
 - **Password Security**: bcrypt hashing with salt rounds
 - **Token Validation**: Middleware-based authentication checks
 - **Profile Management**: User can view and manage their profile
+- **Public Visitor Registration**: Visitors can self-register for access
+
+### 🎨 User Interface & Navigation
+- **Responsive Sidebar**: Modern collapsible sidebar for admin users (ADMIN, SECURITY, EMPLOYEE)
+- **Top Navbar**: Clean navbar for visitor users
+- **Mobile Optimized**: Slide-in sidebar with overlay for mobile devices
+- **Role-Based UI**: Different navigation based on user role
+- **Icon-Based Navigation**: Lucide React icons for better UX
+- **Active Link Highlighting**: Visual indication of current page
+- **Smooth Animations**: Transition effects for sidebar collapse/expand
+- **Adaptive Layout**: Flex-based layout adjusts to sidebar state
 
 ### 👥 Visitor Management
 | Feature | Description |
 |---------|-------------|
-| Create Visitor | Employees/Security can register visitors |
-| Approve/Reject | Admins can approve or reject visitor requests |
-| Check-In | Security marks visitor arrival |
-| Check-Out | Security marks visitor departure |
-| Status Tracking | Real-time status updates |
+| **Photo Upload** | Upload visitor photos (JPEG/PNG/GIF, max 5MB) with preview |
+| **Create Visitor** | Employees/Security can register visitors with photo |
+| **Approve/Reject** | Admins/Security/Employees can approve or reject requests |
+| **QR Code Generation** | Auto-generate QR codes on approval with visitor data |
+| **QR Code Scanner** | Camera-based QR scanning for check-in/out (html5-qrcode) |
+| **Check-In** | Security marks visitor arrival via QR scan or manual |
+| **Check-Out** | Security marks visitor departure |
+| **PDF Badge** | Download printable visitor badge with QR code (PDFKit) |
+| **Email Notifications** | Auto-send emails on approval/rejection/new requests |
+| **Status Tracking** | Real-time status updates (PENDING → APPROVED → CHECKED_IN → CHECKED_OUT) |
+| **Digital Pass** | Visitors can view their approved passes with QR codes |
 
 ### 📊 Dashboard Analytics
 - **Real-time Stats**: Live visitor counts and status tracking
@@ -66,11 +97,20 @@ A full-stack **MERN** application for managing visitor access in organizations. 
 - Filter by status
 - Paginated results
 - Real-time search updates
+- **CSV Export**: Export all visitor data to CSV format
 
 ### 📈 Reports & History
 - **Status Reports**: Filter visitors by status
 - **Date Reports**: Get visitors within date range
 - **Visitor History**: Complete timeline of status changes per visitor
+- **CSV Export**: Download visitor reports in CSV format
+
+### 📧 Email Notifications
+- **Visitor Approved**: Email with embedded QR code to visitor
+- **Visitor Rejected**: Notification to visitor with reason
+- **New Request**: Alert to host about new visitor registration
+- **HTML Templates**: Professional email templates with branding
+- **SMTP Configuration**: Works with Gmail, Outlook, Yahoo, etc.
 
 ### 🕵️ Audit Logs
 - Track all critical actions
@@ -85,26 +125,32 @@ A full-stack **MERN** application for managing visitor access in organizations. 
 ### Frontend
 | Technology | Purpose |
 |------------|---------|
-| React 18 | UI Framework |
+| React 19 | UI Framework |
 | Vite | Build Tool |
 | Redux Toolkit | State Management |
 | React Router v6 | Navigation |
 | Axios | HTTP Client |
 | Tailwind CSS | Styling |
 | Lucide React | Icons |
+| html5-qrcode | QR Code Scanner |
 
 ### Backend
 | Technology | Version | Purpose |
-|------------|---------|---------|y
+|------------|---------|---------|
 | Node.js | 18+ | JavaScript Runtime |
-| Express.js | 4.x | Web Framework |
+| Express.js | 5.x | Web Framework |
 | MongoDB | 6+ | NoSQL Database |
-| Mongoose | 8.x | MongoDB ODM |
+| Mongoose | 9.x | MongoDB ODM |
 | JWT | - | Token Authentication |
 | bcryptjs | - | Password Hashing |
 | Helmet | - | Security Headers |
 | CORS | - | Cross-Origin Support |
 | dotenv | - | Environment Variables |
+| Multer | - | File Upload (Photos) |
+| QRCode | - | QR Code Generation |
+| PDFKit | - | PDF Document Generation |
+| Nodemailer | - | Email Notifications |
+| json2csv | - | CSV Export |
 
 ---
 
@@ -120,20 +166,23 @@ visitor-pass-management-system/
 │   │   │   ├── authApi.js
 │   │   │   ├── visitorApi.js
 │   │   │   ├── dashboardApi.js
-│   │   │   ├── auditApi.js
-│   │   │   └── searchApi.js
+│   │   │   └── auditApi.js
 │   │   ├── components/         # Reusable components
-│   │   │   ├── Navbar.jsx
+│   │   │   ├── Navbar.jsx              # Top navigation (for VISITOR role)
+│   │   │   ├── Sidebar.jsx             # ✨ Sidebar navigation (for admin roles)
 │   │   │   ├── ProtectedRoute.jsx
 │   │   │   └── AuthLoader.jsx
 │   │   ├── layouts/
-│   │   │   └── MainLayout.jsx
+│   │   │   └── MainLayout.jsx          # ✨ Conditional Sidebar/Navbar rendering
 │   │   ├── pages/              # Page components
 │   │   │   ├── Login.jsx
 │   │   │   ├── Register.jsx
+│   │   │   ├── VisitorRegister.jsx    # ✨ Public visitor registration
 │   │   │   ├── Dashboard.jsx
 │   │   │   ├── Visitors.jsx
-│   │   │   ├── CreateVisitor.jsx
+│   │   │   ├── CreateVisitor.jsx      # ✨ With photo upload
+│   │   │   ├── DigitalPass.jsx        # ✨ Visitor digital pass view
+│   │   │   ├── QRScanner.jsx          # ✨ QR code scanner
 │   │   │   ├── AuditLogs.jsx
 │   │   │   ├── Profile.jsx
 │   │   │   ├── Reports.jsx
@@ -154,12 +203,13 @@ visitor-pass-management-system/
 ├── server/                     # Node.js Backend
 │   ├── src/
 │   │   ├── config/
-│   │   │   └── db.js
+│   │   │   ├── db.js
+│   │   │   └── multer.js              # ✨ File upload configuration
 │   │   ├── controllers/
 │   │   │   ├── auth/
-│   │   │   │   └── controller.js
+│   │   │   │   └── controller.js      # ✨ Added visitor registration
 │   │   │   └── visitor/
-│   │   │       └── controller.js
+│   │   │       └── controller.js      # ✨ QR, PDF, CSV features
 │   │   ├── middlewares/
 │   │   │   ├── errorHandler.js
 │   │   │   ├── validate.js
@@ -167,18 +217,25 @@ visitor-pass-management-system/
 │   │   │       ├── middleware.js
 │   │   │       └── role.js
 │   │   ├── models/
-│   │   │   ├── User.js
-│   │   │   ├── Visitor.js
+│   │   │   ├── User.js                # ✨ Added VISITOR role
+│   │   │   ├── Visitor.js             # ✨ Added photo & qrCode fields
 │   │   │   └── AuditLog.js
 │   │   ├── routes/
 │   │   │   ├── auth/
-│   │   │   │   └── routes.js
+│   │   │   │   └── routes.js          # ✨ Added public visitor route
 │   │   │   └── visitor/
-│   │   │       └── routes.js
+│   │   │       └── routes.js          # ✨ QR, badge, CSV routes
 │   │   ├── utils/
-│   │   │   └── auditLogger.js
+│   │   │   ├── auditLogger.js
+│   │   │   ├── qrGenerator.js         # ✨ QR code generation
+│   │   │   ├── emailService.js        # ✨ Email notifications
+│   │   │   ├── pdfGenerator.js        # ✨ PDF badge generation
+│   │   │   └── csvExporter.js         # ✨ CSV export utility
 │   │   └── index.js
+│   ├── uploads/                        # ✨ Photo storage directory
+│   │   └── photos/
 │   ├── .env
+│   ├── .env.example                    # ✨ Updated with SMTP config
 │   └── package.json
 │
 └── README.md
@@ -220,9 +277,22 @@ PORT=5000
 MONGO_URI=mongodb://localhost:27017/visitor-management
 JWT_SECRET=your_super_secret_jwt_key_min_32_characters_long
 NODE_ENV=development
+
+# Email Configuration (Optional - for notifications)
+# Get app password from: https://myaccount.google.com/apppasswords
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-gmail-app-password
 ```
 
-**Important**: Change `JWT_SECRET` to a strong random string in production!
+**Important Notes:**
+- Change `JWT_SECRET` to a strong random string in production!
+- **Email setup**: 
+  - Gmail requires **app password** (not your regular password)
+  - Enable 2-Step Verification first at https://myaccount.google.com/security
+  - Generate app password at https://myaccount.google.com/apppasswords
+  - Emails are optional - system works without SMTP configuration
 
 ### 3️⃣ Frontend Setup
 
@@ -346,6 +416,7 @@ Production: https://your-api-url.com/api
 |--------|----------|-------------|---------------|-------|
 | `POST` | `/auth/register` | Register new user | Yes | ADMIN |
 | `POST` | `/auth/login` | User login | No | Public |
+| `POST` | `/auth/visitor/register` | **✨ Visitor self-registration** | No | Public |
 | `GET` | `/auth/profile` | Get user profile | Yes | All |
 
 **Example: Login**
@@ -390,29 +461,33 @@ Content-Type: application/json
 
 | Method | Endpoint | Description | Auth Required | Roles |
 |--------|----------|-------------|---------------|-------|
-| `POST` | `/visitors` | Create visitor | Yes | EMPLOYEE, SECURITY |
-| `GET` | `/visitors` | Get all visitors | Yes | ADMIN, SECURITY |
-| `POST` | `/visitors/search` | Search & filter visitors | Yes | ADMIN, SECURITY |
-| `PATCH` | `/visitors/:id/status` | Approve/Reject | Yes | ADMIN, SECURITY |
+| `POST` | `/visitors` | **✨ Create visitor (with photo)** | Yes | EMPLOYEE, SECURITY |
+| `GET` | `/visitors` | Get all visitors | Yes | ADMIN, SECURITY, EMPLOYEE |
+| `POST` | `/visitors/search` | Search & filter visitors | Yes | ADMIN, SECURITY, EMPLOYEE |
+| `PATCH` | `/visitors/:id/status` | **✨ Approve/Reject (auto QR + email)** | Yes | ADMIN, SECURITY, EMPLOYEE |
 | `PATCH` | `/visitors/:id/check-in` | Check-in visitor | Yes | SECURITY |
 | `PATCH` | `/visitors/:id/check-out` | Check-out visitor | Yes | SECURITY |
+| `POST` | `/visitors/validate-qr` | **✨ Validate QR code** | Yes | SECURITY |
+| `GET` | `/visitors/:id/badge` | **✨ Download PDF badge** | Yes | ADMIN, SECURITY, VISITOR |
+| `GET` | `/visitors/mypass` | **✨ Get visitor's digital pass** | Yes | VISITOR |
+| `GET` | `/visitors/export/csv` | **✨ Export visitors to CSV** | Yes | ADMIN, SECURITY |
 | `PATCH` | `/visitors/:id` | Update visitor details | Yes | ADMIN |
 | `DELETE` | `/visitors/:id` | Delete visitor | Yes | ADMIN |
 | `GET` | `/visitors/:id/history` | Get visitor history | Yes | ADMIN, SECURITY |
 
-**Example: Create Visitor**
+**Example: Create Visitor (with Photo)**
 ```javascript
-// Request
+// Request (FormData for file upload)
 POST /api/visitors
 Authorization: Bearer <token>
-Content-Type: application/json
+Content-Type: multipart/form-data
 
-{
-  "name": "John Doe",
-  "phone": "9876543210",
-  "email": "john@example.com",
-  "purpose": "Business Meeting"
-}
+FormData:
+  name: "John Doe"
+  phone: "9876543210"
+  email: "john@example.com"
+  purpose: "Business Meeting"
+  photo: <file>  // Optional: JPEG/PNG/GIF, max 5MB
 
 // Response
 {
@@ -423,11 +498,13 @@ Content-Type: application/json
     "phone": "9876543210",
     "email": "john@example.com",
     "purpose": "Business Meeting",
+    "photo": "uploads/photos/visitor-1234567890-abcdef.jpg",
     "host": "65f0a1b2c3d4e5f6g7h8i9j0",
     "status": "PENDING",
     "createdAt": "2026-02-07T10:30:00.000Z"
   }
 }
+// ✨ Email sent to host about new visitor request
 ```
 
 **Example: Search Visitors**
@@ -454,7 +531,7 @@ Content-Type: application/json
 }
 ```
 
-**Example: Approve Visitor**
+**Example: Approve Visitor (Auto-generates QR + Sends Email)**
 ```javascript
 // Request
 PATCH /api/visitors/65f1a2b3c4d5e6f7g8h9i0j1/status
@@ -471,6 +548,7 @@ Content-Type: application/json
   "visitor": {
     "_id": "65f1a2b3c4d5e6f7g8h9i0j1",
     "status": "APPROVED",
+    "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...",  // ✨ QR code generated
     "history": [
       {
         "status": "PENDING",
@@ -485,6 +563,59 @@ Content-Type: application/json
     ]
   }
 }
+// ✨ Email with QR code sent to visitor@example.com
+```
+
+**✨ Example: Validate QR Code**
+```javascript
+// Request
+POST /api/visitors/validate-qr
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "qrData": "{\"id\":\"65f1a2b3...\",\"name\":\"John Doe\",\"status\":\"APPROVED\"}"
+}
+
+// Response
+{
+  "valid": true,
+  "visitor": {
+    "_id": "65f1a2b3c4d5e6f7g8h9i0j1",
+    "name": "John Doe",
+    "phone": "9876543210",
+    "status": "APPROVED",
+    "host": { "name": "Host Name" }
+  }
+}
+```
+
+**✨ Example: Download PDF Badge**
+```javascript
+// Request
+GET /api/visitors/65f1a2b3c4d5e6f7g8h9i0j1/badge
+Authorization: Bearer <token>
+
+// Response
+Content-Type: application/pdf
+Content-Disposition: attachment; filename=visitor-badge-John-Doe.pdf
+
+<PDF Binary Data>
+// PDF includes visitor details, photo, and embedded QR code
+```
+
+**✨ Example: Export Visitors to CSV**
+```javascript
+// Request
+GET /api/visitors/export/csv
+Authorization: Bearer <token>
+
+// Response
+Content-Type: text/csv
+Content-Disposition: attachment; filename=visitors-export-2026-02-07.csv
+
+Name,Phone,Email,Purpose,Host Name,Host Email,Status,Created At,Updated At
+John Doe,9876543210,john@example.com,Meeting,Admin User,admin@test.com,APPROVED,2/7/2026...
 ```
 
 ### Dashboard & Reports Routes
@@ -598,27 +729,101 @@ Content-Type: application/json
 
 ## 🧑‍💼 Role Permissions
 
-| Feature | ADMIN | SECURITY | EMPLOYEE |
-|---------|:-----:|:--------:|:--------:|
-| View Dashboard | ✅ | ✅ | ❌ |
-| Create Visitor | ❌ | ✅ | ✅ |
-| Approve/Reject | ✅ | ✅ | ❌ |
-| Check-in | ❌ | ✅ | ❌ |
-| Check-out | ❌ | ✅ | ❌ |
-| View Audit Logs | ✅ | ❌ | ❌ |
-| Generate Reports | ✅ | ✅ | ❌ |
-| View Visitor History | ✅ | ✅ | ❌ |
-| View Profile | ✅ | ✅ | ✅ |
+### Navigation Interface by Role
+
+| Role | Navigation Type | Sidebar Features |
+|------|----------------|------------------|
+| **ADMIN** | 🎨 **Sidebar** | Dashboard, Visitor Log, Create Visitor, Reports, History, Audit Logs, Register User, Profile, Logout |
+| **SECURITY** | 🎨 **Sidebar** | Dashboard, Visitor Log, Create Visitor, QR Scanner, Reports, History, Profile, Logout |
+| **EMPLOYEE** | 🎨 **Sidebar** | Visitor Log, Create Visitor, Profile, Logout |
+| **VISITOR** | 📱 **Top Navbar** | My Digital Pass, Profile, Logout |
+
+**✨ Admin Sidebar Features:**
+- Collapsible on desktop (expand/collapse)
+- Slide-in menu on mobile with overlay
+- Icon-based navigation with active link highlighting
+- Responsive design adapts to all screen sizes
+
+### Feature Permissions
+
+| Feature | ADMIN | SECURITY | EMPLOYEE | VISITOR |
+|---------|:-----:|:--------:|:--------:|:-------:|
+| **Dashboard** | ✅ | ✅ | ❌ | ❌ |
+| **View Visitors** | ✅ | ✅ | ✅ | ❌ |
+| **Create Visitor** | ✅ | ✅ | ✅ | ❌ |
+| **Upload Photo** | ✅ | ✅ | ✅ | ❌ |
+| **Approve/Reject** | ✅ | ✅ | ✅ | ❌ |
+| **Check-In (QR/Manual)** | ✅ | ✅ | ❌ | ❌ |
+| **Check-Out (QR/Manual)** | ✅ | ✅ | ❌ | ❌ |
+| **QR Scanner** | ✅ | ✅ | ❌ | ❌ |
+| **Download PDF Badge** | ✅ | ✅ | ❌ | ✅ |
+| **View Audit Logs** | ✅ | ❌ | ❌ | ❌ |
+| **Generate Reports** | ✅ | ✅ | ❌ | ❌ |
+| **Export CSV** | ✅ | ✅ | ❌ | ❌ |
+| **View Visitor History** | ✅ | ✅ | ❌ | ❌ |
+| **Register Staff** | ✅ | ❌ | ❌ | ❌ |
+| **Self-Register** | ❌ | ❌ | ❌ | ✅ (Public) |
+| **View Digital Pass** | ❌ | ❌ | ❌ | ✅ |
+| **View Profile** | ✅ | ✅ | ✅ | ✅ |
+
+### Role Descriptions
+
+**👑 ADMIN**
+- Complete system access
+- Manages staff accounts (ADMIN, SECURITY, EMPLOYEE)
+- Full analytics and audit log access
+- Can perform all visitor management operations
+
+**🛡️ SECURITY / FRONTDESK**
+- Issues visitor passes and scans QR codes
+- Performs check-in/check-out operations
+- Access to dashboard and reports
+- Can create and approve visitors
+- Uses QR scanner for validation
+
+**👤 EMPLOYEE / HOST**
+- Can invite visitors (create visitor requests)
+- Can approve/reject visitor requests
+- Views all visitors in the system
+- No access to check-in/out or QR scanning
+
+**🎫 VISITOR**
+- Can self-register via public page
+- Views approved digital passes with QR codes
+- Downloads PDF visitor badges
+- No access to system management features
 
 ---
 
 ## 📸 Screenshots
+
+### Sidebar Navigation (Admin Interface)
+> Modern collapsible sidebar for ADMIN, SECURITY, and EMPLOYEE roles
+> - **Desktop**: Expandable/collapsible sidebar with icons and labels
+> - **Mobile**: Slide-in sidebar with overlay and hamburger menu
+> - **Active Links**: Visual highlighting of current page
+> - **Role-Based Menu**: Different menu items based on user permissions
 
 ### Dashboard
 > Real-time analytics with status cards showing total visitors, pending approvals, and today's check-ins
 
 ### Visitor Management
 > Search, filter, and manage visitors with one-click actions
+> - **CSV Export**: Download visitor data
+> - **Photo Preview**: View uploaded visitor photos
+> - **QR Code Display**: Quick access to visitor QR codes
+
+### QR Code Scanner
+> Camera-based scanning for quick check-in/check-out operations
+> - Real-time QR code detection
+> - Automatic status updates
+> - Works with visitor digital passes
+
+### Digital Pass (Visitor Interface)
+> Clean top navbar for VISITOR role with mobile-responsive design
+> - View approved passes with QR codes
+> - Download PDF badges
+> - Status tracking (APPROVED → CHECKED_IN → CHECKED_OUT)
 
 ### Audit Logs
 > Timeline view of all security actions with user attribution
@@ -646,7 +851,7 @@ Use these credentials to test different role functionalities:
   "role": "ADMIN"
 }
 ```
-**Access**: Full system access, can manage users, view audit logs, approve/reject visitors
+**Access**: Full system access, can manage users, view audit logs, approve/reject visitors, QR scanning, CSV export
 
 #### 🛡️ SECURITY Account
 ```json
@@ -657,7 +862,7 @@ Use these credentials to test different role functionalities:
   "role": "SECURITY"
 }
 ```
-**Access**: Dashboard, visitor management, check-in/out operations, create visitors
+**Access**: Dashboard, visitor management, check-in/out operations, QR scanner, create visitors, reports, CSV export
 
 #### 👤 EMPLOYEE Account
 ```json
@@ -668,6 +873,19 @@ Use these credentials to test different role functionalities:
   "role": "EMPLOYEE"
 }
 ```
+**Access**: View visitors, create visitors, approve/reject requests, basic visitor management
+
+#### 🎫 VISITOR Account
+```json
+{
+  "name": "Guest Visitor",
+  "email": "visitor@test.com",
+  "password": "123456",
+  "role": "VISITOR"
+}
+```
+**Access**: View digital pass, download PDF badge (after approval)
+**Note**: Visitors can also self-register via `/visitor-register` without authentication
 **Access**: Create visitors for meetings, view own profile
 
 ### Sample Visitor Data
@@ -749,7 +967,7 @@ Examples of **invalid** passwords:
 
 ---
 
-## � Security Features
+## 🔒 Security Features
 
 ### Backend Security
 - **JWT Authentication**: Secure token-based authentication with expiration
@@ -760,6 +978,19 @@ Examples of **invalid** passwords:
 - **Role-Based Middleware**: Multi-layer authorization checks
 - **MongoDB Injection Protection**: Mongoose schema validation
 - **Environment Variables**: Sensitive data stored in .env files
+- **✨ File Upload Security**: 
+  - File type validation (JPEG/PNG/GIF only)
+  - File size limits (5MB max)
+  - Unique filename generation to prevent overwrites
+  - Storage in isolated directory
+- **✨ QR Code Security**: 
+  - Encoded with visitor ID and status
+  - Server-side validation before check-in/out
+  - Tamper-proof data structure
+- **✨ Email Security**: 
+  - SMTP with TLS/SSL encryption
+  - App password authentication (no plain passwords)
+  - Rate limiting on email sends
 
 ### Frontend Security
 - **Protected Routes**: Components wrapped with authentication check
@@ -767,6 +998,8 @@ Examples of **invalid** passwords:
 - **Role-Based Rendering**: UI elements hidden based on user role
 - **Auto-logout**: On token expiration or invalid session
 - **Input Validation**: Client-side form validation
+- **✨ Secure File Upload**: File type and size validation before upload
+- **✨ XSS Protection**: Sanitized user inputs and outputs
 
 ### Audit Trail
 - **Complete Logging**: All CRUD operations logged
@@ -774,12 +1007,57 @@ Examples of **invalid** passwords:
 - **Timestamp Tracking**: Precise time of each action
 - **Status Transitions**: Before and after states recorded
 - **Compliance Ready**: Suitable for regulatory requirements
+- **✨ Email Logs**: All notification sends tracked in server logs
 
 ---
 
 ## 🛠 Troubleshooting
 
 ### Common Issues
+
+#### **✨ Email Notifications Not Sending**
+```
+Email service not configured. Skipping email send.
+```
+**Solution**:
+1. Add SMTP credentials to `.env`:
+   ```env
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_USER=your-email@gmail.com
+   SMTP_PASS=your-app-password
+   ```
+2. For Gmail:
+   - Enable 2-Step Verification: https://myaccount.google.com/security
+   - Generate App Password: https://myaccount.google.com/apppasswords
+   - Use app password (not regular password) in `SMTP_PASS`
+3. Restart server after updating `.env`
+
+#### **✨ Photo Upload Failed**
+```
+Error: Only image files are allowed
+```
+**Solution**:
+1. Verify file type is JPEG/PNG/GIF
+2. Check file size is under 5MB
+3. Ensure `uploads/photos/` directory exists in server folder
+4. Check file permissions on `uploads/` directory
+
+#### **✨ QR Code Scanner Not Working**
+**Solution**:
+1. Grant camera permissions in browser
+2. Use HTTPS in production (required for camera access)
+3. Ensure proper lighting for QR code scanning
+4. Verify QR code is from approved visitor (status must be APPROVED)
+
+#### **✨ PDF Badge Download Failed**
+```
+Error generating badge
+```
+**Solution**:
+1. Verify visitor has `qrCode` field (must be approved first)
+2. Check PDFKit installation: `npm list pdfkit`
+3. Ensure visitor data is complete (name, purpose, host)
 
 #### **MongoDB Connection Error**
 ```
@@ -875,6 +1153,12 @@ console.log(store.getState());
    MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/visitor-db
    JWT_SECRET=your_production_secret_key_32_chars_min
    NODE_ENV=production
+   
+   # ✨ Optional: Email Notifications
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_USER=your-email@gmail.com
+   SMTP_PASS=your-gmail-app-password
    ```
 
 3. **Add start script** in `package.json`:
@@ -962,7 +1246,7 @@ VITE_API_BASE_URL=https://api.yourproduction.com/api
 ## 🎯 Learning Outcomes
 
 - ✅ Full-stack MERN application development
-- ✅ JWT authentication & RBAC implementation
+- ✅ JWT authentication & RBAC implementation  
 - ✅ Middleware-based security patterns
 - ✅ Audit logging & compliance tracking
 - ✅ MongoDB schema design with relationships
@@ -971,11 +1255,16 @@ VITE_API_BASE_URL=https://api.yourproduction.com/api
 - ✅ Search, filter & pagination patterns
 - ✅ Error handling best practices
 - ✅ RESTful API design principles
-- ✅ Responsive UI with Tailwind CSS
+- ✅ Responsive UI with Tailwind CSS & sidebar navigation
+- ✅ QR code generation & scanning implementation
+- ✅ File upload handling with Multer
+- ✅ PDF generation with PDFKit
+- ✅ Email service integration with Nodemailer
+- ✅ CSV data export functionality
+- ✅ Mobile-first responsive design patterns
 - ✅ Production deployment strategies
 
 ---
-<<<<<<< HEAD
 
 ## 🤝 Contributing
 

@@ -49,3 +49,16 @@ export const getReportByDate = (from, to) => {
 export const getVisitorHistory = (id) => {
     return axiosInstance.get(`/visitors/${id}/history`);
 }
+// Export visitors to CSV
+export const exportVisitorsCSV = () => {
+    return axiosInstance.get("/visitors/export/csv", {
+        responseType: 'blob'
+    });
+};
+
+// Download visitor badge PDF
+export const downloadBadge = (id) => {
+    return axiosInstance.get(`/visitors/${id}/badge`, {
+        responseType: 'blob'
+    });
+};

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchVisitors } from "../redux/slices/visitorSlice";
-import { updateStatus, checkInVisitor, checkOutVisitor } from "../api/visitorApi";
+import { updateStatus, checkInVisitor, checkOutVisitor, exportVisitorsCSV } from "../api/visitorApi";
 import { useNavigate } from "react-router-dom";
+import { Download } from "lucide-react";
 
 const Visitors = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,21 @@ const Visitors = () => {
   const checkIn = async (id) => { await checkInVisitor(id); refreshData(); };
   const checkOut = async (id) => { await checkOutVisitor(id); refreshData(); };
 
+  const handleExport = async () => {
+    try {
+      const response = await exportVisitorsCSV();
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `visitors-export-${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      alert('Export failed');
+    }
+  };
+
   // Status Badge Logic
   const getStatusStyle = (s) => {
     const styles = {
@@ -41,10 +57,19 @@ const Visitors = () => {
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8">
       <div className="max-w-5xl mx-auto">
-        <header className="mb-8">
-          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Visitor Management</h2>
-          <p className="text-slate-500 mt-1">Manage and track all guest entries and approvals.</p>
-        </header>
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Visitor Management</h2>
+            <p className="text-slate-500 mt-1">Manage and track all guest entries and approvals.</p>
+          </div>
+          <button
+            onClick={handleExport}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all shadow-sm"
+          >
+            <Download size={20} />
+            Export CSV
+          </button>
+        </div>
 
         {/* CONTROLS */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">

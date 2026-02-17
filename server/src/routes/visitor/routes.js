@@ -4,6 +4,7 @@ const controller = require("../../controllers/visitor/controller");
 const authMiddleware = require("../../middlewares/auth/middleware");
 const roleMiddleware = require("../../middlewares/auth/role");
 const { validateVisitor } = require("../../middlewares/validate");
+const upload = require("../../config/multer");
 
 // ================= STATIC ROUTES FIRST =================
 
@@ -42,8 +43,24 @@ router.post(
 router.post(
   "/search",
   authMiddleware,
-  roleMiddleware(["ADMIN", "SECURITY"]),
+  roleMiddleware(["ADMIN", "SECURITY", "EMPLOYEE"]),
   controller.searchVisitors
+);
+
+// EXPORT TO CSV
+router.get(
+  "/export/csv",
+  authMiddleware,
+  roleMiddleware(["ADMIN", "SECURITY"]),
+  controller.exportVisitors
+);
+
+// VALIDATE QR CODE
+router.post(
+  "/validate-qr",
+  authMiddleware,
+  roleMiddleware(["SECURITY"]),
+  controller.validateQR
 );
 
 // ================= CRUD ROUTES =================
@@ -53,6 +70,7 @@ router.post(
   "/",
   authMiddleware,
   roleMiddleware(["EMPLOYEE", "SECURITY"]),
+  upload.single('photo'), // Add photo upload
   validateVisitor,
   controller.createVisitor
 );
@@ -61,7 +79,7 @@ router.post(
 router.get(
   "/",
   authMiddleware,
-  roleMiddleware(["ADMIN", "SECURITY"]),
+  roleMiddleware(["ADMIN", "SECURITY", "EMPLOYEE"]),
   controller.getVisitors
 );
 
@@ -69,7 +87,7 @@ router.get(
 router.patch(
   "/:id/status",
   authMiddleware,
-  roleMiddleware(["ADMIN", "SECURITY"]),
+  roleMiddleware(["ADMIN", "SECURITY", "EMPLOYEE"]),
   controller.updateStatus
 );
 
@@ -103,6 +121,22 @@ router.delete(
   authMiddleware,
   roleMiddleware(["ADMIN"]),
   controller.deleteVisitor
+);
+
+// MY DIGITAL PASS (VISITOR only)
+router.get(
+  "/mypass",
+  authMiddleware,
+  roleMiddleware(["VISITOR"]),
+  controller.getMyPass
+);
+
+// DOWNLOAD PDF BADGE
+router.get(
+  "/:id/badge",
+  authMiddleware,
+  roleMiddleware(["ADMIN", "SECURITY", "VISITOR"]),
+  controller.downloadBadge
 );
 
 // HISTORY (DYNAMIC — LAST)

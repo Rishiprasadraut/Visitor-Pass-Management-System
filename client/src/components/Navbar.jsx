@@ -55,12 +55,18 @@ const Navbar = () => {
           ${isOpen ? "opacity-100 visible" : "opacity-0 invisible md:opacity-100 md:visible"}
         `}>
           
-          {(role === "ADMIN" || role === "SECURITY") && (
+          {(role === "ADMIN" || role === "SECURITY" || role === "EMPLOYEE") && (
             <>
-              <NavItem to="/dashboard">Dashboard</NavItem>
+              {(role === "ADMIN" || role === "SECURITY") && (
+                <NavItem to="/dashboard">Dashboard</NavItem>
+              )}
               <NavItem to="/visitors">Visitor Log</NavItem>
-              <NavItem to="/reports">Reports</NavItem>
-              <NavItem to="/visitor-history">History</NavItem>
+              {(role === "ADMIN" || role === "SECURITY") && (
+                <>
+                  <NavItem to="/reports">Reports</NavItem>
+                  <NavItem to="/visitor-history">History</NavItem>
+                </>
+              )}
             </>
           )}
 
@@ -73,6 +79,14 @@ const Navbar = () => {
 
           {(role === "EMPLOYEE" || role === "SECURITY") && (
             <NavItem to="/create-visitor">Create Visitor</NavItem>
+          )}
+
+          {role === "SECURITY" && (
+            <NavItem to="/qr-scanner">QR Scanner</NavItem>
+          )}
+
+          {role === "VISITOR" && (
+            <NavItem to="/digital-pass">My Digital Pass</NavItem>
           )}
 
           <NavItem to="/profile">Profile</NavItem>

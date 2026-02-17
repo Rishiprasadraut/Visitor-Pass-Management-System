@@ -4,12 +4,15 @@ const roleMiddleware = require("../../middlewares/auth/role");
 
 
 const {
-    register, login,
+    register, login, visitorRegister
 } = require("../../controllers/auth/controller");
 
 //public
 
 router.post("/login", login);
+
+// Public Visitor Self-Registration
+router.post("/visitor/register", visitorRegister);
 
 //protected - ADMIN only (security fix: prevent unauthorized user registration)
 router.post(

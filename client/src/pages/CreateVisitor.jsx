@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createVisitor } from "../api/visitorApi";
+import { Upload } from "lucide-react";
 
 const CreateVisitor = () => {
   const [form, setForm] = useState({
@@ -8,14 +9,35 @@ const CreateVisitor = () => {
     email: "",
     purpose: "",
   });
+  const [photo, setPhoto] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPhoto(file);
+      setPhotoPreview(URL.createObjectURL(file));
+    }
+  };
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createVisitor(form);
+      const formData = new FormData();
+      formData.append('name', form.name);
+      formData.append('phone', form.phone);
+      formData.append('email', form.email);
+      formData.append('purpose', form.purpose);
+      if (photo) {
+        formData.append('photo', photo);
+      }
+
+      await createVisitor(formData);
       alert("Visitor Created Successfully!");
-      // Optional: Reset form here
+      // Reset form
       setForm({ name: "", phone: "", email: "", purpose: "" });
+      setPhoto(null);
+      setPhotoPreview(null);
     } catch (error) {
       alert("Error creating visitor");
     }
@@ -31,6 +53,30 @@ const CreateVisitor = () => {
         </div>
 
         <form onSubmit={handlerSubmit} className="space-y-5">
+          {/* Photo Upload */}
+          <div>
+            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5 ml-1">
+              Photo (Optional)
+            </label>
+            <div className="flex items-center gap-4">
+              {photoPreview && (
+                <img src={photoPreview} alt="Preview" className="h-20 w-20 rounded-lg object-cover border-2 border-gray-200" />
+              )}
+              <label className="flex-1 cursor-pointer">
+                <div className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl hover:bg-gray-100 transition-all">
+                  <Upload size={20} className="text-gray-600" />
+                  <span className="text-sm text-gray-700">{photo ? photo.name : 'Choose photo'}</span>
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                  className="hidden"
+                />
+              </label>
+            </div>
+          </div>
+
           {["name", "phone", "email", "purpose"].map((field) => (
             <div key={field}>
               <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5 ml-1">

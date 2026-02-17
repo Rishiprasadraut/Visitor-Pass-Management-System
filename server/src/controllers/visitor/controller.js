@@ -1,6 +1,11 @@
 const Visitor = require("../../models/Visitor");
+const User = require("../../models/User");
 const logAudit = require("../../utils/auditLogger");
 const AuditLog = require("../../models/AuditLog");
+const { generateQRCode } = require("../../utils/qrGenerator");
+const { sendEmail, emailTemplates } = require("../../utils/emailService");
+const { generateVisitorBadge } = require("../../utils/pdfGenerator");
+const { exportToCSV } = require("../../utils/csvExporter");
 
 
 // create visitor (security / Employee)
@@ -14,6 +19,7 @@ exports.createVisitor = async (req, res) => {
             phone,
             email,
             purpose,
+            photo: req.file ? req.file.path : null, // Save photo path if uploaded
             host: req.user._id,
             history: [
                 {
@@ -22,8 +28,19 @@ exports.createVisitor = async (req, res) => {
                 }
             ]
         })
+
+        // Send email notification to host about new visitor request
+        if (req.user.email) {
+            await sendEmail({
+                to: req.user.email,
+                subject: 'New Visitor Request',
+                html: emailTemplates.newVisitorRequest(req.user.email, name, purpose)
+            });
+        }
+
         res.status(201).json({ message: "Visitor created successfully", visitor, });
     } catch (err) {
+        console.error("Create visitor error:", err);
         res.status(500).json({ message: "Error creating visitor" });
     }
 };
@@ -74,6 +91,37 @@ exports.updateStatus = async (req, res) => {
             status,
             changedBy: req.user._id
         });
+
+        // Generate QR code if approved
+        if (status === "APPROVED") {
+            const qrData = JSON.stringify({
+                id: visitor._id,
+                name: visitor.name,
+                phone: visitor.phone,
+                status: "APPROVED"
+            });
+            visitor.qrCode = await generateQRCode(qrData);
+
+            // Send approval email with QR code
+            if (visitor.email) {
+                await sendEmail({
+                    to: visitor.email,
+                    subject: 'Visitor Pass Approved',
+                    html: emailTemplates.visitorApproved(
+                        visitor.name,
+                        req.user.name,
+                        visitor.qrCode
+                    )
+                });
+            }
+        } else if (status === "REJECTED" && visitor.email) {
+            // Send rejection email
+            await sendEmail({
+                to: visitor.email,
+                subject: 'Visitor Request Update',
+                html: emailTemplates.visitorRejected(visitor.name, req.user.name)
+            });
+        }
 
         await visitor.save();
 
@@ -381,5 +429,107 @@ exports.deleteVisitor = async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Error deleting visitor" });
+    }
+};
+// Get My Digital Pass (VISITOR role)
+exports.getMyPass = async (req, res) => {
+    try {
+        // Find visitor records where the email matches the logged-in visitor's email
+        const visitorRecords = await Visitor.find({
+            email: req.user.email,
+            status: { $in: ["APPROVED", "CHECKED_IN", "CHECKED_OUT"] }
+        })
+        .populate("host", "name email")
+        .sort({ createdAt: -1 });
+
+        res.json({ passes: visitorRecords });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error fetching digital pass" });
+    }
+};
+
+// Download PDF Badge
+exports.downloadBadge = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const visitor = await Visitor.findById(id).populate('host', 'name email');
+
+        if (!visitor) {
+            return res.status(404).json({ message: "Visitor not found" });
+        }
+
+        if (visitor.status !== "APPROVED" && visitor.status !== "CHECKED_IN") {
+            return res.status(400).json({ message: "Visitor not approved" });
+        }
+
+        const pdfDoc = await generateVisitorBadge(visitor, visitor.qrCode);
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename=visitor-badge-${visitor.name.replace(/\s+/g, '-')}.pdf`);
+        
+        pdfDoc.pipe(res);
+    } catch (err) {
+        console.error('PDF generation error:', err);
+        res.status(500).json({ message: "Error generating badge" });
+    }
+};
+
+// Export Visitors to CSV
+exports.exportVisitors = async (req, res) => {
+    try {
+        const visitors = await Visitor.find()
+            .populate('host', 'name email')
+            .sort({ createdAt: -1 });
+
+        const csv = exportToCSV(visitors);
+
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename=visitors-export-${new Date().toISOString().split('T')[0]}.csv`);
+        res.send(csv);
+    } catch (err) {
+        console.error('CSV export error:', err);
+        res.status(500).json({ message: "Error exporting data" });
+    }
+};
+
+// Validate QR Code for Check-In
+exports.validateQR = async (req, res) => {
+    try {
+        const { qrData } = req.body;
+        
+        if (!qrData) {
+            return res.status(400).json({ message: "QR data required" });
+        }
+
+        const parsedData = JSON.parse(qrData);
+        const visitor = await Visitor.findById(parsedData.id).populate('host', 'name email');
+
+        if (!visitor) {
+            return res.status(404).json({ message: "Invalid QR code" });
+        }
+
+        if (visitor.status !== "APPROVED" && visitor.status !== "CHECKED_IN") {
+            return res.status(400).json({ 
+                message: `Visitor not approved. Current status: ${visitor.status}`
+            });
+        }
+
+        res.json({ 
+            valid: true, 
+            visitor: {
+                _id: visitor._id,
+                name: visitor.name,
+                phone: visitor.phone,
+                email: visitor.email,
+                purpose: visitor.purpose,
+                host: visitor.host,
+                status: visitor.status,
+                photo: visitor.photo
+            }
+        });
+    } catch (err) {
+        console.error('QR validation error:', err);
+        res.status(400).json({ message: "Invalid QR code format" });
     }
 };

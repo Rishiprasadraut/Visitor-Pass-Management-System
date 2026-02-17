@@ -15,6 +15,12 @@ const visitorSchema = new Schema({
     email: {
         type: String,
     },
+    photo: {
+        type: String, // Path to uploaded photo
+    },
+    qrCode: {
+        type: String, // QR code data URL
+    },
     purpose: {
         type: String,
         required: true,

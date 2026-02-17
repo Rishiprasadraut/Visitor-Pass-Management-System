@@ -67,3 +67,44 @@ exports.login = async (req, res) => {
         res.status(500).json({ message: "Server error during login" });
     }
 }
+// Visitor Self-Registration (Public)
+exports.visitorRegister = async (req, res) => {
+    const { name, email, password } = req.body;
+
+    try {
+        const userExists = await User.findOne({ email });
+        if (userExists)
+            return res.status(400).json({ message: "User already exists" })
+
+        // Password strength validation
+        if (password.length < 8) {
+            return res.status(400).json({ 
+                message: "Password must be at least 8 characters" 
+            });
+        }
+
+        if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+            return res.status(400).json({ 
+                message: "Password must contain uppercase, lowercase, and number" 
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = await User.create({
+            name,
+            email,
+            password: hashedPassword,
+            role: 'VISITOR', // Force VISITOR role for self-registration
+        })
+
+        res.status(201).json({
+            message: "Visitor account created successfully",
+            userId: user._id,
+        })
+
+    } catch (err) {
+        console.error(err, "error in visitor registration")
+        res.status(500).json({ message: "Server error during registration" });
+    }
+}

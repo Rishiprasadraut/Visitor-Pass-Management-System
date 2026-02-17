@@ -18,9 +18,13 @@ const Login = () => {
  // 🔥 AUTO REDIRECT IF ALREADY LOGGED IN
   useEffect(() => {
     if (isAuthenticated && role) {
-      role === "EMPLOYEE"
-        ? navigate("/create-visitor")
-        : navigate("/dashboard");
+      if (role === "EMPLOYEE") {
+        navigate("/create-visitor");
+      } else if (role === "VISITOR") {
+        navigate("/digital-pass");
+      } else {
+        navigate("/dashboard");
+      }
     }
   }, [isAuthenticated, role, navigate]);
 
@@ -54,6 +58,8 @@ const Login = () => {
         navigate("/dashboard");
       } else if (profile.data.role === "EMPLOYEE") {
         navigate("/create-visitor");
+      } else if (profile.data.role === "VISITOR") {
+        navigate("/digital-pass");
       }
     } catch (err) {
       console.error("Login ERROR", err.response?.data || err.message);
@@ -104,12 +110,14 @@ const Login = () => {
           </button>
         </div>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
-          Don't have an account?{" "}
-          <a href="/register" className="text-blue-600 hover:underline">
-            Sign up
-          </a>
-        </p>
+        <div className="mt-6 space-y-2">
+          <p className="text-center text-sm text-gray-500">
+            Are you a visitor?{" "}
+            <a href="/visitor-register" className="text-indigo-600 font-medium hover:underline">
+              Register here
+            </a>
+          </p>
+        </div>
       </form>
     </div>
   );

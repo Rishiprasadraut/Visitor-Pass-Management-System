@@ -10,12 +10,16 @@ import AuditLogs from "./pages/AuditLogs";
 import Profile from "./pages/Profile";
 import Reports from "./pages/Reports";
 import VisitorHistory from "./pages/VisitorHistory";
+import VisitorRegister from "./pages/VisitorRegister";
+import DigitalPass from "./pages/DigitalPass";
+import QRScanner from "./pages/QRScanner";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/visitor-register" element={<VisitorRegister />} />
          <Route
             path="/register"
             element={
@@ -30,7 +34,7 @@ const App = () => {
           <Route
             path="/visitors"
             element={
-              <ProtectedRoute roles={["ADMIN", "SECURITY"]}>
+              <ProtectedRoute roles={["ADMIN", "SECURITY", "EMPLOYEE"]}>
                 <Visitors />
               </ProtectedRoute>
             }
@@ -66,7 +70,7 @@ const App = () => {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute roles={["ADMIN", "SECURITY", "EMPLOYEE"]}>
+              <ProtectedRoute roles={["ADMIN", "SECURITY", "EMPLOYEE", "VISITOR"]}>
                 <Profile />
               </ProtectedRoute>
             }
@@ -86,6 +90,24 @@ const App = () => {
             element={
               <ProtectedRoute roles={["ADMIN", "SECURITY"]}>
                 <VisitorHistory />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/digital-pass"
+            element={
+              <ProtectedRoute roles={["VISITOR"]}>
+                <DigitalPass />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/qr-scanner"
+            element={
+              <ProtectedRoute roles={["SECURITY"]}>
+                <QRScanner />
               </ProtectedRoute>
             }
           />
