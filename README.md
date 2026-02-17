@@ -1,4 +1,4 @@
-# 🏢 Visitor Pass Management System
+<img width="1920" height="1080" alt="Screenshot 2026-02-17 133743" src="https://github.com/user-attachments/assets/1cf80dd8-e4eb-47de-87d5-b18571a1b996" /># 🏢 Visitor Pass Management System
 
 A full-stack **MERN** application for managing visitor access in organizations. Features **QR code-based check-in/out**, **photo upload**, **PDF badge generation**, **email notifications**, role-based access control, real-time status tracking, audit logging, and comprehensive reporting.
 
@@ -806,18 +806,18 @@ Content-Type: application/json
 
 ### Dashboard
 > Real-time analytics with status cards showing total visitors, pending approvals, and today's check-ins
+> <img width="1920" height="1080" alt="Screenshot 2026-02-17 134016" src="https://github.com/user-attachments/assets/9b5d9ae4-0027-4d88-93f2-4c06619a07d9" />
+
 
 ### Visitor Management
 > Search, filter, and manage visitors with one-click actions
-> - **CSV Export**: Download visitor data
-> - **Photo Preview**: View uploaded visitor photos
-> - **QR Code Display**: Quick access to visitor QR codes
+> > Camera-based scanning for quick check-in/check-out operations
+> <img width="1920" height="1080" alt="Screenshot 2026-02-17 133743" src="https://github.com/user-attachments/assets/1c25264a-4957-4a11-8cb4-ea18dbf8aa86" />
+
 
 ### QR Code Scanner
 > Camera-based scanning for quick check-in/check-out operations
-> - Real-time QR code detection
-> - Automatic status updates
-> - Works with visitor digital passes
+
 
 ### Digital Pass (Visitor Interface)
 > Clean top navbar for VISITOR role with mobile-responsive design
@@ -827,12 +827,17 @@ Content-Type: application/json
 
 ### Audit Logs
 > Timeline view of all security actions with user attribution
+> <img width="1920" height="1080" alt="Screenshot 2026-02-17 133934" src="https://github.com/user-attachments/assets/54c51c21-cb9a-4c8d-8269-5512b249c3cf" />
+
 
 ### Reports
 > Generate reports filtered by status or custom date ranges
+> <img width="1920" height="1080" alt="Screenshot 2026-02-17 133815" src="https://github.com/user-attachments/assets/3ef477e1-7a0a-444c-a0dc-80719c29ceeb" />
+
 
 ### Visitor History
 > Complete timeline showing all status changes for a specific visitor
+<img width="1920" height="1080" alt="Screenshot 2026-02-17 133934" src="https://github.com/user-attachments/assets/fb63b0ee-88d5-4838-a961-6843a35dc915" />
 
 ---
 
