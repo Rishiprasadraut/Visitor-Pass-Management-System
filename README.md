@@ -827,7 +827,8 @@ Content-Type: application/json
 
 ### Audit Logs
 > Timeline view of all security actions with user attribution
-> <img width="1920" height="1080" alt="Screenshot 2026-02-17 133934" src="https://github.com/user-attachments/assets/54c51c21-cb9a-4c8d-8269-5512b249c3cf" />
+><img width="1920" height="1080" alt="Screenshot 2026-02-17 134048" src="https://github.com/user-attachments/assets/539ec8c4-96a5-4227-ab0f-5a35a679ddf0" />
+ 
 
 
 ### Reports
