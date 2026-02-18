@@ -824,6 +824,8 @@ Content-Type: application/json
 > - View approved passes with QR codes
 > - Download PDF badges
 > - Status tracking (APPROVED → CHECKED_IN → CHECKED_OUT)
+> - <img width="844" height="707" alt="Screenshot 2026-02-18 132201" src="https://github.com/user-attachments/assets/d2810f26-5277-454a-88af-35ff855324c8" />
+
 
 ### Audit Logs
 > Timeline view of all security actions with user attribution
