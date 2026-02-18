@@ -48,7 +48,7 @@ router.post(
 );
 
 // EXPORT TO CSV
-router.get(
+router.post(
   "/export/csv",
   authMiddleware,
   roleMiddleware(["ADMIN", "SECURITY"]),

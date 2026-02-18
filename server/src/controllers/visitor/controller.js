@@ -35,6 +35,8 @@ exports.createVisitor = async (req, res) => {
                 to: req.user.email,
                 subject: 'New Visitor Request',
                 html: emailTemplates.newVisitorRequest(req.user.email, name, purpose)
+            }).catch(err => {
+                console.error('Failed to send visitor creation email:', err.message);
             });
         }
 
@@ -120,6 +122,8 @@ exports.updateStatus = async (req, res) => {
                 to: visitor.email,
                 subject: 'Visitor Request Update',
                 html: emailTemplates.visitorRejected(visitor.name, req.user.name)
+            }).catch(err => {
+                console.error('Failed to send rejection email:', err.message);
             });
         }
 
@@ -478,7 +482,26 @@ exports.downloadBadge = async (req, res) => {
 // Export Visitors to CSV
 exports.exportVisitors = async (req, res) => {
     try {
-        const visitors = await Visitor.find()
+        const { search = "", status } = req.body;
+
+        const query = {};
+
+        // Status Filter
+        if (status) {
+            query.status = status;
+        }
+
+        // Text search
+        if (search) {
+            query.$or = [
+                { name: { $regex: search, $options: "i" } },
+                { phone: { $regex: search, $options: "i" } },
+                { email: { $regex: search, $options: "i" } },
+                { purpose: { $regex: search, $options: "i" } }
+            ];
+        }
+
+        const visitors = await Visitor.find(query)
             .populate('host', 'name email')
             .sort({ createdAt: -1 });
 

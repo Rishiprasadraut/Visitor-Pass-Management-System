@@ -138,6 +138,22 @@ const DigitalPass = () => {
                 </div>
               </div>
 
+              {/* QR Code Section */}
+              {pass.qrCode && (
+                <div className="p-6 border-b border-slate-200 flex flex-col items-center bg-slate-50">
+                  <div className="bg-white p-4 rounded-xl shadow-md">
+                    <img 
+                      src={pass.qrCode} 
+                      alt="Visitor QR Code" 
+                      className="w-48 h-48 object-contain"
+                    />
+                  </div>
+                  <p className="mt-3 text-sm text-slate-600 font-medium">
+                    Scan this QR code at security desk
+                  </p>
+                </div>
+              )}
+
               {/* Pass Details */}
               <div className="p-6 grid md:grid-cols-2 gap-4">
                 <div className="flex items-start gap-3">

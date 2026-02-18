@@ -50,8 +50,11 @@ export const getVisitorHistory = (id) => {
     return axiosInstance.get(`/visitors/${id}/history`);
 }
 // Export visitors to CSV
-export const exportVisitorsCSV = () => {
-    return axiosInstance.get("/visitors/export/csv", {
+export const exportVisitorsCSV = ({ search, status }) => {
+    return axiosInstance.post("/visitors/export/csv", {
+        search,
+        status
+    }, {
         responseType: 'blob'
     });
 };

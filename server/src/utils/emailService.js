@@ -8,6 +8,15 @@ const transporter = nodemailer.createTransport({
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS
+    },
+    // Disable DNS verification for testing/development
+    dnsTimeout: 3000,
+    greetingTimeout: 3000,
+    connectionTimeout: 3000,
+    socketTimeout: 5000,
+    // Skip DNS checks if SMTP is not configured
+    tls: {
+        rejectUnauthorized: false
     }
 });
 

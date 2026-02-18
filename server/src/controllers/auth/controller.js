@@ -7,6 +7,12 @@ exports.register = async (req, res) => {
     const { name, email, password, role } = req.body;
 
     try {
+        // Email format validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: "Invalid email format" });
+        }
+
         const userExists = await User.findOne({ email });
         if (userExists)
             return res.status(400).json({ message: "User already Exists" })
@@ -72,6 +78,12 @@ exports.visitorRegister = async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
+        // Email format validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: "Invalid email format" });
+        }
+
         const userExists = await User.findOne({ email });
         if (userExists)
             return res.status(400).json({ message: "User already exists" })
